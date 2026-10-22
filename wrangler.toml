@@ -1,0 +1,19 @@
+name = "calvos-reports"
+main = "worker/src/index.js"
+compatibility_date = "2026-10-22"
+
+# Repositorio donde se abren los informes.
+[vars]
+GH_REPO = "arcadematicas/calvOS-reports"
+GH_LABELS = "informe"
+
+# El token de GitHub NO se pone aqui (nunca en el repo):
+#   wrangler secret put GITHUB_TOKEN
+# Permiso minimo del token: Issues = Read and write en ESTE repositorio.
+
+# Rate limit por IP (opcional pero recomendado):
+#   wrangler kv namespace create RL
+# y pegar el id:
+# [[kv_namespaces]]
+# binding = "RL"
+# id = "<pega-aqui-el-id>"
