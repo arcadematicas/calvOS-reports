@@ -161,10 +161,10 @@ export default {
     const ip = request.headers.get("cf-connecting-ip") || "";
     if (await rateLimited(env, ip)) return json({ ok: false, error: "rate_limited" }, 429);
 
-    const env = payload.environment && typeof payload.environment === "object" ? payload.environment : {};
+    const envInfo = payload.environment && typeof payload.environment === "object" ? payload.environment : {};
     const meta = {
-      hostname: payload.hostname || env.hostname || env.host || "",
-      user: payload.user || env.user || env.username || "",
+      hostname: payload.hostname || envInfo.hostname || envInfo.host || "",
+      user: payload.user || envInfo.user || envInfo.username || "",
     };
     const clean = redactDeep(payload, meta);
     const body = renderBody(clean);
