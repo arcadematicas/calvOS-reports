@@ -161,7 +161,11 @@ export default {
     const ip = request.headers.get("cf-connecting-ip") || "";
     if (await rateLimited(env, ip)) return json({ ok: false, error: "rate_limited" }, 429);
 
-    const meta = { hostname: payload.hostname, user: payload.user };
+    const env = payload.environment && typeof payload.environment === "object" ? payload.environment : {};
+    const meta = {
+      hostname: payload.hostname || env.hostname || env.host || "",
+      user: payload.user || env.user || env.username || "",
+    };
     const clean = redactDeep(payload, meta);
     const body = renderBody(clean);
     if (body.length > MAX_BODY) return json({ ok: false, error: "too_large" }, 413);
